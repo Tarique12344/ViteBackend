@@ -18,12 +18,12 @@ app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 const petRoutes = require('./routes/petRoutes');
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes'); // ✅ contact routes included
-// const shopRoutes = require('./routes/shopRoutes'); // ✅ shop routes included
+const shopRoutes = require('./routes/shopRoutes'); // ✅ shop routes included
 
 app.use('/api/pets', petRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
-// app.use('/api/shop', shopRoutes); // ✅ add shop API route
+app.use('/api/shop', shopRoutes); // ✅ add shop API route
 
 /* -------------------- MongoDB Connection -------------------- */
 mongoose
