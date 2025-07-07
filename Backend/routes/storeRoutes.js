@@ -1,9 +1,10 @@
+// backend/routes/storeRoutes.js
 const express = require('express');
 const router = express.Router();
 const ShopItem = require('../models/shopItem');
 const jwt = require('jsonwebtoken');
 
-// Middleware to verify admin via JWT
+// Middleware to verify admin
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   if (!authHeader) return res.status(401).json({ message: 'No token provided' });
@@ -18,7 +19,7 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-// GET all shop items (public)
+// GET all store items (public)
 router.get('/', async (req, res) => {
   try {
     const items = await ShopItem.find();
@@ -28,7 +29,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST new shop item (admin only)
+// POST new store item (admin only)
 router.post('/', verifyToken, async (req, res) => {
   const item = new ShopItem({
     name: req.body.name,
@@ -46,14 +47,14 @@ router.post('/', verifyToken, async (req, res) => {
   }
 });
 
-// DELETE shop item by ID (admin only)
+// DELETE store item (admin only)
 router.delete('/:id', verifyToken, async (req, res) => {
   try {
-    const deletedItem = await ShopItem.findByIdAndDelete(req.params.id);
-    if (!deletedItem) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    res.json({ message: 'Item deleted successfully' });
+    const item = await ShopItem.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+
+    await item.remove();
+    res.json({ message: 'Item deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
