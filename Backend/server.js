@@ -16,12 +16,14 @@ app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 const petRoutes = require('./routes/petRoutes');
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
-const storeRoutes = require('./routes/storeRoutes'); // renamed shopRoutes to storeRoutes
+const storeRoutes = require('./routes/storeRoutes');
+const weatherRoutes = require('./routes/weather'); // ✅ use require here too!
 
 app.use('/api/pets', petRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/store', storeRoutes); // updated to /api/store
+app.use('/api/store', storeRoutes);
+app.use('/api/weather', weatherRoutes); // ✅ good route path
 
 /* MongoDB Connection */
 mongoose
