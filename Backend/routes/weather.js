@@ -1,4 +1,3 @@
-// backend/routes/weather.js
 const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
@@ -6,7 +5,7 @@ require('dotenv').config();
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const city = req.query.city || 'Toledo';
+  const city = req.query.city || 'Cincinnati'; // ✅ default to Cincinnati
   const apiKey = process.env.WEATHER_API_KEY;
 
   if (!apiKey) {
